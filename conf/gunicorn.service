@@ -1,3 +1,4 @@
+#Path = /etc/systemd/system/gunicorn.service
 [Unit]
 Description=gunicorn daemon
 #Requires= gunicorn.socket
@@ -7,7 +8,7 @@ After=network.target
 User=ubuntu
 Group=www-data
 WorkingDirectory=/home/ubuntu/misc/3dprintapp/printshoponline
-ExecStart=/home/ubuntu/misc/3dprintapp/venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/ubuntu/misc/3dprintapp/printshoponline/printshoponline.sock printshoponline.wsgi:applicatiom
+ExecStart=/home/ubuntu/misc/3dprintapp/venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/ubuntu/misc/3dprintapp/printshoponline/printshoponline.sock printshoponline.wsgi:application
 #WorkingDirectory=/home/ubuntu/misc/personal_portfolio/django3-personal-portfolio
 #ExecStart=/home/ubuntu/misc/personal_portfolio/venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/ubuntu/misc/personal_portfolio/django3-personal-portfolio/portfolio.sock personal_portfolio.wsgi:application
 
