@@ -2,3 +2,5 @@
 venv/
 *.sock
 db.sqlite3
+build/
+nodemodules/
