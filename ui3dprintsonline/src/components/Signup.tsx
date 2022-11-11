@@ -18,6 +18,7 @@ import {
 import background from "../img/coming_soon.png";
 import { Link } from "react-router-dom";
 import { Popover2, Tooltip2 } from "@blueprintjs/popover2";
+import { User } from "../services/api/User.ts"
 
 interface ISignupState{
     showPassword: boolean
@@ -87,6 +88,7 @@ export class Signup extends React.Component<ISignupState> {
                             labelFor="text-input">
                             <InputGroup id="text-input"
                                         name="First Name"
+                                        value={this.state.firstName}
                                         placeholder="Enter First Name"
                                         onChange={this.handleChange}/>
                         </FormGroup>
@@ -96,6 +98,7 @@ export class Signup extends React.Component<ISignupState> {
                             labelFor="text-input">
                             <InputGroup id="text-input"
                                         name="Last Name"
+                                        value={this.state.lastName}
                                         placeholder="Enter Last Name"
                                         onChange={this.handleChange}/>
                         </FormGroup>
@@ -141,6 +144,7 @@ export class Signup extends React.Component<ISignupState> {
                                     outline={true}
                                     large={true}
                                     type="submit"
+                                    value={"submit"}
                                     intent={Intent.PRIMARY}>Submit
                             </Button>
                         </div>
@@ -153,11 +157,21 @@ export class Signup extends React.Component<ISignupState> {
 
     handleSubmit = (event: any) => {
         event.preventDefault()
-        const formData = new FormData(event.target)
-        console.log("formData=", formData)
+        const formData = new FormData(event.target);
+        const headers = {
+            'Content-Type': 'multipart/form-data',
+            'X-CSRFToken': Cookies.get('csrftoken'),
+            'Accept': 'application/json'
+        }
+        User.signup(formData, {headers: headers}).then((response: any) => {
+            console.log("User=", response)
+            // this.setState({
+            //     productList: response.data.data
+            // });
+        })
     }
 
-    public handleChange = (event) => {
+    handleChange = (event) => {
         switch(event.target.name){
             case "First Name":
                 this.setState({
